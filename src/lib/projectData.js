@@ -58,6 +58,16 @@ const projects = [
     demoUrl: "https://top-courses-gamma-nine.vercel.app/",
     githubUrl: "https://github.com/mashu2315/top_courses",
   },
+  {
+    id: 7,
+    title: "Ashutosh Portfolio",
+    description:
+      "To implement every details in single page is quite difficult for this I made my own portfolio where I implemented all my details.",
+    image: "/projects/project7.png",
+    tags: ["React", "CSS"],
+    demoUrl: "https://ashutoshmaurya-navy.vercel.app/",
+    githubUrl: "https://github.com/mashu2315/myportfolio",  
+  },
    
 ];
 
