@@ -64,9 +64,19 @@ const projects = [
     description:
       "To implement every details in single page is quite difficult for this I made my own portfolio where I implemented all my details.",
     image: "/projects/project7.png",
-    tags: ["React", "CSS"],
+    tags: ["React", "CSS", "Tailwind CSS"],
     demoUrl: "https://ashutoshmaurya-navy.vercel.app/",
     githubUrl: "https://github.com/mashu2315/myportfolio",  
+  },
+   {
+    id: 8,
+    title: "Trading Leaderboard",
+    description:
+      "Trading type leaderboard having properties of instant updates real-world changes.",
+    image: "/projects/project8.png",
+    tags: ["React", "CSS", "MongoDB", "ExpressJs", "Nodejs", "Tailwind CSS"],
+    demoUrl: "https://leaderboard-icen.vercel.app/",
+    githubUrl: "https://github.com/mashu2315/leaderboard",  
   },
    
 ];
