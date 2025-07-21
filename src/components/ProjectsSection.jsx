@@ -36,7 +36,7 @@ export const ProjectsSection = () => {
               onClick={() =>
                 handleOpenModal(project)
               }
-              className="py-2 group bg-card rounded-lg overflow-hidden flex flex-col justify-between shadow-xs card-hover h-full"
+              className="py-2 group border-2 bg-card border-primary/30 rounded-lg overflow-hidden flex flex-col justify-between shadow-xs card-hover h-full"
             >
               {/* images  */}
               <div className="h-48 overflow-hidden">
