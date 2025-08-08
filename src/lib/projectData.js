@@ -78,6 +78,16 @@ const projects = [
     demoUrl: "https://leaderboard-icen.vercel.app/",
     githubUrl: "https://github.com/mashu2315/leaderboard",  
   },
+  {
+    id: 9,
+    title: "Zapmeds",
+    description:
+      "Get your medicine delivery in only 15 minutes with the arrangements of medical tests.",
+    image: "/projects/project9.png",
+    tags: ["React", "CSS", "Tailwind CSS"],
+    demoUrl: "https://zapmeds.vercel.app/",
+    githubUrl: "https://github.com/mashu2315/zapmeds",  
+  },
    
 ];
 

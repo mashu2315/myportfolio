@@ -9,7 +9,7 @@ const education = [
       school: "Madan Mohan Malviya University of Technology, Gorakhpur",
       date: "Sept 2023 - July 2027",
       grade: "8.85 CGPA",
-      desc: "I am currently pursuing my Btech degree in Information Technology Branch from Madan Mohan Malviya University of Technology, Gorakhpur. I am gained a strong foundation in programming, software development, and computer science principles. I have studied courses such as Data Structures & Algorithms, Object-Oriented Programming, Database Management Systems, Web Development, Software Engineering and Computer Networking. I am actively participating in various workshops and technical events, which enhanced my skills and knowledge. My experience at MMMUT University has been instrumental in shaping my technical abilities and professional growth.",
+      desc: "I am currently pursuing my Btech degree in Information Technology Branch from Madan Mohan Malviya University of Technology, Gorakhpur. My experience at MMMUT has been instrumental in shaping my technical abilities and professional growth.",
       degree: "Bachelor of Technology - B.Tech",
     },
     {
