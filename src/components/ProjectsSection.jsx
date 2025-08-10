@@ -1,5 +1,6 @@
 import { ArrowRight, ExternalLink, Github } from "lucide-react";
 import { useState } from "react";
+import Tilt from "react-parallax-tilt"
 import projects from "../lib/projectData"
 
 export const ProjectsSection = () => {
@@ -31,7 +32,15 @@ export const ProjectsSection = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {projects.map((project, key) => (
-            <div
+            <Tilt
+              className="transition-all delay-300 rounded-full"
+              tiltMaxAngleX={4}
+              tiltMaxAngleY={8}
+              perspective={500}
+              scale={1.00}
+              transitionSpeed={100}
+              gyroscope={true}
+            ><div
               key={key}
               onClick={() =>
                 handleOpenModal(project)
@@ -87,7 +96,9 @@ export const ProjectsSection = () => {
                 </a>
 
               </div>
-            </div>
+            </div></Tilt>
+            
+            
           ))}
         </div>
 

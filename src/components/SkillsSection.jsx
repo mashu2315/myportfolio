@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Tilt from "react-parallax-tilt"
 import { cn } from "@/lib/utils";
 
 const skills = [    
@@ -43,7 +44,8 @@ export const SkillsSection = () => {
 
         <div className="flex flex-wrap justify-center gap-4 mb-12">
           {categories.map((category, key) => (
-            <button
+            
+              <button
               key={key}
               onClick={() => setActiveCategory(category)}
               className={cn(
@@ -55,12 +57,23 @@ export const SkillsSection = () => {
             >
               {category}
             </button>
+            
+            
           ))}
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredSkills.map((skill, key) => (
-            <div
+             <Tilt
+              className="transition-all delay-300 rounded-full"
+              tiltMaxAngleX={10}
+              tiltMaxAngleY={10}
+              perspective={500}
+              scale={1.00}
+              transitionSpeed={100}
+              gyroscope={true}
+            >
+              <div
               key={key}
               className="bg-card p-6 rounded-lg shadow-gray-700 shadow-xs card-hover"
             >
@@ -80,6 +93,8 @@ export const SkillsSection = () => {
                 </span>
               </div>
             </div>
+            </Tilt>
+            
           ))}
         </div>
       </div>
