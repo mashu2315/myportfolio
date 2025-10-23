@@ -1,5 +1,5 @@
 import { Briefcase, Code, User } from "lucide-react";
-import Resume from '../assets/Resume_Ashutosh_1.pdf'
+import Resume from '../assets/Resume.pdf'
 export const AboutSection = () => {
 
   const downloadResume = async () => {
