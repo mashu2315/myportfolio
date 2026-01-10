@@ -1,16 +1,27 @@
 import React from "react";
 import Tilt from "react-parallax-tilt";
 import dws from "../assets/dws.png";
+import orkeneo from "../assets/orkeneo.jpeg"
 export const experiences = [
+ 
   {
+    id: 1,
+    img: orkeneo,
+    role: "Full Stack Intern",
+    company: "Orkeneo",
+    date: "January 2026 - Present",
+    desc: "Implemented and refined interactive dashboard modules using Next.js (App Router) and Tailwind CSS, focusing on component reusability, accessibility, and consistent design systems. Integrated API-driven components using effective state management and server-side rendering, resulting in faster page loads and a maintainable frontend architecture.",
+    skills: ["Full Stack", "TypeScript", "Tailwind CSS","Next.js","PostgreSQL"],
+  },
+   {
     id: 0,
     img: dws,
     role: "Software Development Engineer",
     company: "DWS Global Tech",
-    date: "August 2025 - Present",
+    date: "August 2025 - January-2026",
     desc: "Developed dynamic and scalable web applications using the MERN stack, handling both frontend and backend development. Collaborated with teams to build responsive UI and optimize application performance in an agile environment.",
     skills: ["MERN Stack", "TypeScript", "Tailwind CSS"],
-  },
+  }
 ];
 
 const Experience = () => {
