@@ -13,7 +13,7 @@ const skills = [
   { name: "JavaScript", level: 90, category: "frontend" },
   { name: "React", level: 90, category: "frontend" },
   { name: "Tailwind CSS", level: 90, category: "frontend" },
-
+  { name: "Next.js", level: 50, category:"frontend"},
   // Backend
   { name: "Node.js", level: 70, category: "backend" },
   { name: "Express", level: 75, category: "backend" },
@@ -94,7 +94,6 @@ export const SkillsSection = () => {
               </div>
             </div>
             </Tilt>
-            
           ))}
         </div>
       </div>
