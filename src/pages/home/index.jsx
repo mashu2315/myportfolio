@@ -1,6 +1,6 @@
 import { StarBackground } from "../../components/StarBackground";
 import { OsShell } from "../../components/os/OsShell";
-import { Folder, LayoutGrid, Mail, Terminal } from "lucide-react";
+import { Folder, LayoutGrid, Mail, Terminal, Gamepad2, Swords } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { profile } from "../../lib/portfolioData";
 import { createElement, useRef, useState } from "react";
@@ -101,7 +101,7 @@ export const HomePage = () => {
           )}
 
           {/* Desktop Icons in a clean layout across the whole screen (non-scrollable, wraps naturally) */}
-          <div className="absolute inset-6 flex flex-row md:flex-col flex-wrap gap-4 items-center md:items-start justify-start md:justify-end content-start pointer-events-none">
+          <div className="absolute inset-6 flex flex-row md:flex-col flex-wrap gap-4 items-center md:items-start justify-center md:justify-end content-start pointer-events-none">
             <DesktopFolder to="/about" label="About" constraintsRef={constraintsRef} />
             <DesktopFolder to="/skills" label="Skills" constraintsRef={constraintsRef} />
             <DesktopFolder to="/experience" label="Experience" constraintsRef={constraintsRef} />
