@@ -9,6 +9,8 @@ import { TerminalPage } from "./pages/terminal";
 import { ProjectsPage } from "./pages/projects";
 import { NotFound } from "./pages/NotFound";
 import { CustomCursor } from "./components/os/CustomCursor";
+import { SnakePage } from "./pages/games/snake";
+import { PaintPage } from "./pages/games/paint";
 
 function App() {
   return (
@@ -24,6 +26,8 @@ function App() {
           <Route path="/projects" element={<ProjectsPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/terminal" element={<TerminalPage />} />
+          <Route path="/snake" element={<SnakePage />} />
+          <Route path="/paint" element={<PaintPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

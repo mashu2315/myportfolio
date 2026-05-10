@@ -14,6 +14,8 @@ import {
   Sun,
   Terminal,
   Folder,
+  Gamepad2,
+  Palette,
   X,
 } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
@@ -226,6 +228,8 @@ export const OsShell = ({ children }) => {
       "/experience": { label: "Experience", icon: Folder },
       "/education": { label: "Education", icon: Folder },
       "/contact": { label: "Contact", icon: Mail },
+      "/snake": { label: "Snake", icon: Gamepad2 },
+      "/paint": { label: "Paint", icon: Palette },
     };
 
     const unpinnedItems = unpinnedPaths.map((path) => {
@@ -369,11 +373,34 @@ export const OsShell = ({ children }) => {
                         key={m.to}
                         to={m.to}
                         onClick={() => setIsSystemMenuOpen(false)}
-                        className="text-sm rounded-lg px-3 py-2 bg-foreground/5 hover:bg-foreground/10 transition-colors text-foreground/80"
+                        className="text-sm rounded-lg px-3 py-2 bg-foreground/5 hover:bg-foreground/10 transition-colors text-foreground/80 text-center"
                       >
                         {m.label}
                       </Link>
                     ))}
+                  </div>
+
+                  <div className="pt-3 border-t border-foreground/10">
+                    <div className="text-[10px] font-bold text-muted-foreground/80 uppercase tracking-widest px-1 mb-2 flex items-center gap-2">
+                      <div className="w-1.5 h-1.5 rounded-full bg-primary" />
+                      Games
+                    </div>
+                    <div className="grid grid-cols-2 gap-2">
+                      <Link
+                        to="/snake"
+                        onClick={() => setIsSystemMenuOpen(false)}
+                        className="text-xs flex items-center justify-center gap-2 rounded-lg px-3 py-2 bg-primary/10 hover:bg-primary/20 transition-colors text-primary font-bold border border-primary/10"
+                      >
+                        <Gamepad2 size={14} /> Snake
+                      </Link>
+                      <Link
+                        to="/paint"
+                        onClick={() => setIsSystemMenuOpen(false)}
+                        className="text-xs flex items-center justify-center gap-2 rounded-lg px-3 py-2 bg-primary/10 hover:bg-primary/20 transition-colors text-primary font-bold border border-primary/10"
+                      >
+                        <Palette size={14} /> Paint
+                      </Link>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -460,7 +487,7 @@ export const OsShell = ({ children }) => {
             <div
               className={cn(
                 "border border-foreground/15 bg-card/40 backdrop-blur-md shadow-[0_15px_60px_rgba(0,0,0,0.25)] overflow-hidden flex flex-col transition-all duration-300",
-                isMaximized ? "rounded-none h-[calc(100vh-4rem)] w-full" : "rounded-2xl h-[calc(100vh-7rem)] mr-4 md:mr-6"
+                isMaximized ? "rounded-none h-[calc(100vh-4rem)] w-full" : "rounded-2xl h-[calc(100vh-7rem)] mx-4 md:ml-0 md:mr-6"
               )}
             >
               <div className="h-11 flex-none border-b border-foreground/10 bg-background/40 flex items-center justify-between px-4 select-none">
