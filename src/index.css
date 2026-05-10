@@ -161,6 +161,30 @@ html {
   box-shadow: 0 0 10px 5px rgba(255, 255, 255, 0.3);
 }
 
+/* Premium Custom Theme-Aware Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--foreground) / 0.15);
+  border-radius: 999px;
+  transition: all 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--primary) / 0.8);
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
 #root {
   max-width: 100%;
   margin: 0 auto;

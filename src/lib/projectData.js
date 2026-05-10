@@ -78,7 +78,7 @@ const projects = [
   },
   {
     id: 8,
-    title: "Ashutosh Portfolio",
+    title: "My Portfolio - AshutoshOS",
     description:
       "To implement every details in single page is quite difficult for this I made my own portfolio where I implemented all my details responsive UI with enabling dark mode features.",
     image: "/projects/project7.png",
@@ -106,7 +106,46 @@ const projects = [
     demoUrl: "https://zapmeds.vercel.app/",
     githubUrl: "https://github.com/mashu2315/zapmeds",  
   },
-   
+  {
+    id: 11,
+    title: "Spin The Wheel",
+    description:
+      "To play a wheel game for getting prizes this type of wheel game for the users. User can play the game and set the probability of occuring any prize.",
+    image: "/projects/project12.png",
+    tags: ["React", "CSS", "Tailwind CSS", "TypeScript"],
+    demoUrl: "https://spin-the-wheel-green-seven.vercel.app/",
+    githubUrl: "https://github.com/mashu2315/spin_the_wheel",  
+  },
+  {
+    id: 12,
+    title: "Cura Doc",
+    description:
+      "Cura doc is the platform to maintain the medicines, appointments, history of patients, where patients can maintain their appointments with doctors, medicine history and much more.",
+    image: "/projects/project13.png",
+    tags: ["Next.js", "CSS", "Tailwind CSS", "TypeScript"],
+    demoUrl: "https://cura-doc.vercel.app/",
+    githubUrl: "https://github.com/mashu2315/Cura_doc",  
+  },
+  {
+    id: 13,
+    title: "AgroSense",
+    description:
+      "This is a WSN-Based Smart Agriculture Monitoring and Crop Recommendation System using Cooja Simulation and Machine Learning. AgroSense is the platform for agriculture monitoring, crop recommendations via AI, comparison between crops, weather monitoring for the farmers to make their farming easier.",
+    image: "/projects/project14.png",
+    tags: ["Next.js", "Reactjs", "CSS", "Tailwind CSS", "TypeScript", "Python", "ContikiOS", "C", "Node.js", "Express.js", "MongoDB", "Langchain", "Web Sockets", "Machine Learning"],
+    demoUrl: "https://github.com/mashu2315/agriculture_monitoring",
+    githubUrl: "https://github.com/mashu2315/agriculture_monitoring",  
+  },
+  {
+    id: 14,
+    title: "MochanD",
+    description:
+      "Clone of Actual MochanD website where I tried to make it responsive and UI smooth and user-friendly also the response time is less than 3 seconds.",
+    image: "/projects/project15.png",
+    tags: ["Next.js", "Reactjs", "CSS", "Tailwind CSS", "TypeScript"],
+    demoUrl: "https://mochand-five.vercel.app/",
+    githubUrl: "https://github.com/mashu2315/mochand",  
+  },
 ];
 
 

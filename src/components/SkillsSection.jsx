@@ -1,33 +1,7 @@
 import { useState } from "react";
 import Tilt from "react-parallax-tilt"
 import { cn } from "@/lib/utils";
-
-const skills = [    
-
-    // Language
-    {name:"C", level: 70, category:"language"},
-    {name:"C++", level: 70, category:"language"},
-    {name:"Python", level: 70, category:"language"},
-  // Frontend
-  { name: "HTML/CSS", level: 95, category: "frontend" },
-  { name: "JavaScript", level: 90, category: "frontend" },
-  { name: "React", level: 90, category: "frontend" },
-  { name: "Tailwind CSS", level: 90, category: "frontend" },
-  { name: "Next.js", level: 50, category:"frontend"},
-  // Backend
-  { name: "Node.js", level: 70, category: "backend" },
-  { name: "Express", level: 75, category: "backend" },
-  { name: "MongoDB", level: 70, category: "backend" },
-  { name: "SQL", level: 60, category: "backend" },
-
-  // Tools
-  { name: "Git/GitHub", level: 90, category: "tools" },
-  { name: "Postman", level: 50, category: "tools" },
-  { name: "Pycharm", level: 55, category: "tools" },
-  { name: "VS Code", level: 95, category: "tools" },
-];
-
-const categories = ["all", "frontend", "backend", "tools", "language"];
+import { skillCategories, skills } from "../lib/portfolioData";
 
 export const SkillsSection = () => {
   const [activeCategory, setActiveCategory] = useState("all");
@@ -43,7 +17,7 @@ export const SkillsSection = () => {
         </h2>
 
         <div className="flex flex-wrap justify-center gap-4 mb-12">
-          {categories.map((category, key) => (
+          {skillCategories.map((category, key) => (
             
               <button
               key={key}

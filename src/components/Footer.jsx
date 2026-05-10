@@ -1,12 +1,14 @@
 import { ArrowUp } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const navItems = [
-  { name: "Home", href: "#hero" },
-  { name: "About", href: "#about" },
-  { name: "Skills", href: "#skills" },
-  { name: "Projects", href: "#projects" },
-  { name: "Education", href: "#education" },
-  { name: "Contact", href: "#contact" },
+  { name: "Home", to: "/" },
+  { name: "About", to: "/about" },
+  { name: "Skills", to: "/skills" },
+  { name: "Projects", to: "/projects" },
+  { name: "Education", to: "/education" },
+  { name: "Contact", to: "/contact" },
+  { name: "Terminal", to: "/terminal" },
 ];
 
 
@@ -23,14 +25,14 @@ export const Footer = () => {
           navItems.map((data,index)=>{
               return (
                 <div key={index} className="hover:text-primary/95 ">
-                  <a href={data.href}>{data.name}</a>
+                  <Link to={data.to}>{data.name}</Link>
                 </div>
               )
           })
         }
       </div>
       <a
-        href="#hero"
+        href="#"
         className="p-2 rounded-full bg-primary/10 hover:bg-primary/20 text-primary transition-colors"
       >
         <ArrowUp size={20} />

@@ -1,25 +1,25 @@
 import { useEffect, useState } from "react";
 import { cn } from "../lib/utils";
 import { Menu, X } from "lucide-react";
+import { Link, useLocation } from "react-router-dom";
 
 const navItems = [
   { name: "Home", href: "#hero" },
   { name: "About", href: "#about" },
   { name: "Skills", href: "#skills" },
   { name: "Experience", href: "#experience" },
-  { name: "Projects", href: "#projects" },
+  { name: "Projects", to: "/projects" },
   { name: "Education", href: "#education" },
   { name: "Contact", href: "#contact" },
 ];
 
 export const Navbar = () => {
-  const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
-      const scrolled = window.scrollY > 10;
-      setIsScrolled(scrolled);
+      // kept for compatibility if Navbar is re-enabled
     };
     window.addEventListener("scroll", handleScroll);
     return () => {
@@ -28,19 +28,9 @@ export const Navbar = () => {
   }, []);
 
   return (
-    <nav
-      className={cn(
-        "fixed w-full z-40 transition-all duration-300",
-        isScrolled
-          ? "py-3 bg-background/60 backdrop-blur-md  shadow-lg"
-          : "py-3"
-      )}
-    >
+    <nav className="hidden">
       <div className="container flex items-center justify-between">
-        <a
-          className="text-xl font-bold text-primary flex items-center"
-          href="#hero"
-        >
+        <Link className="text-xl font-bold text-primary flex items-center" to="/">
           <span className="relative z-10 mt-2">
             <span className="text-glow text-foreground">
               <span className="text-glow text-foreground">&lt;</span>
@@ -50,19 +40,32 @@ export const Navbar = () => {
             Portfolio
             <span>&gt;</span>
           </span>
-        </a>
+        </Link>
         {/* desktop nav */}
 
         <div className="hidden md:flex space-x-8 mr-28 mt-2">
           {navItems.map((item, key) => {
             return (
-              <a
-                key={key}
-                className="text-foreground/80 hover:text-primary transition-colors duration-300"
-                href={item.href}
-              >
-                {item.name}
-              </a>
+              item.to ? (
+                <Link
+                  key={key}
+                  className={cn(
+                    "text-foreground/80 hover:text-primary transition-colors duration-300",
+                    location.pathname === item.to && "text-primary"
+                  )}
+                  to={item.to}
+                >
+                  {item.name}
+                </Link>
+              ) : (
+                <a
+                  key={key}
+                  className="text-foreground/80 hover:text-primary transition-colors duration-300"
+                  href={item.href}
+                >
+                  {item.name}
+                </a>
+              )
             );
           })}
         </div>
@@ -88,14 +91,25 @@ export const Navbar = () => {
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col space-y-8 text-xl">
             {navItems.map((item, key) => {
               return (
-                <a
-                  key={key}
-                  className="text-foreground/80 hover:text-primary transition-colors duration-300"
-                  href={item.href}
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  {item.name}
-                </a>
+                item.to ? (
+                  <Link
+                    key={key}
+                    className="text-foreground/80 hover:text-primary transition-colors duration-300"
+                    to={item.to}
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    {item.name}
+                  </Link>
+                ) : (
+                  <a
+                    key={key}
+                    className="text-foreground/80 hover:text-primary transition-colors duration-300"
+                    href={item.href}
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    {item.name}
+                  </a>
+                )
               );
             })}
           </div>
