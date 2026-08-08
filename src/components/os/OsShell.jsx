@@ -6,11 +6,9 @@ import {
   LayoutGrid,
   Mail,
   Maximize2,
-  Monitor,
   Minus,
   Moon,
   Square,
-  Settings,
   Sun,
   Terminal,
   Folder,
@@ -21,6 +19,7 @@ import {
 import { useEffect, useMemo, useState } from "react";
 import { cn } from "../../lib/utils";
 import { profile } from "../../lib/portfolioData";
+import { StarBackground } from "../StarBackground";
 
 function timeLabel() {
   const d = new Date();
@@ -33,6 +32,7 @@ function timeLabel() {
 
 const CalendarWidget = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(null);
 
   const year = currentDate.getFullYear();
   const month = currentDate.getMonth();
@@ -42,20 +42,38 @@ const CalendarWidget = () => {
     "July", "August", "September", "October", "November", "December"
   ];
 
-  // Get first day of the month (0 = Sunday, 1 = Monday, ...)
+  const yearOptions = useMemo(() => {
+    const years = [];
+    const startYear = 1970;
+    const endYear = 2060;
+    for (let y = startYear; y <= endYear; y++) {
+      years.push(y);
+    }
+    return years;
+  }, []);
+
   const firstDay = new Date(year, month, 1).getDay();
-  // Get total days in the month
   const totalDays = new Date(year, month + 1, 0).getDate();
 
   const days = [];
-  // Fill empty spaces for the first day of the week
   for (let i = 0; i < firstDay; i++) {
     days.push(null);
   }
-  // Fill days of the month
   for (let d = 1; d <= totalDays; d++) {
     days.push(d);
   }
+
+  const handleMonthChange = (e) => {
+    e.stopPropagation();
+    const newMonth = parseInt(e.target.value, 10);
+    setCurrentDate(new Date(year, newMonth, 1));
+  };
+
+  const handleYearChange = (e) => {
+    e.stopPropagation();
+    const newYear = parseInt(e.target.value, 10);
+    setCurrentDate(new Date(newYear, month, 1));
+  };
 
   const prevMonth = (e) => {
     e.stopPropagation();
@@ -67,6 +85,23 @@ const CalendarWidget = () => {
     setCurrentDate(new Date(year, month + 1, 1));
   };
 
+  const prevYear = (e) => {
+    e.stopPropagation();
+    setCurrentDate(new Date(year - 1, month, 1));
+  };
+
+  const nextYear = (e) => {
+    e.stopPropagation();
+    setCurrentDate(new Date(year + 1, month, 1));
+  };
+
+  const jumpToToday = (e) => {
+    e.stopPropagation();
+    const now = new Date();
+    setCurrentDate(now);
+    setSelectedDate(now.getDate());
+  };
+
   const today = new Date();
   const isToday = (day) => {
     return (
@@ -76,55 +111,119 @@ const CalendarWidget = () => {
     );
   };
 
+  const isSelected = (day) => {
+    return selectedDate === day;
+  };
+
   return (
-    <div className="p-4 bg-card/95 backdrop-blur-md border border-foreground/15 rounded-xl shadow-[0_20px_60px_rgba(0,0,0,0.35)] text-foreground w-80" onClick={(e) => e.stopPropagation()}>
-      <div className="flex items-center justify-between mb-4">
-        <button
-          onClick={prevMonth}
-          className="p-1 rounded hover:bg-foreground/10 transition-colors cursor-pointer text-sm font-bold"
-        >
-          &lt;
-        </button>
-        <span className="font-semibold text-sm">
-          {monthNames[month]} {year}
-        </span>
-        <button
-          onClick={nextMonth}
-          className="p-1 rounded hover:bg-foreground/10 transition-colors cursor-pointer text-sm font-bold"
-        >
-          &gt;
-        </button>
+    <div
+      className="p-4 bg-card/95 backdrop-blur-md border border-foreground/15 rounded-2xl shadow-2xl text-foreground w-84 select-none"
+      onClick={(e) => e.stopPropagation()}
+    >
+      {/* Calendar Header with Month/Year Navigation */}
+      <div className="flex items-center justify-between gap-1 mb-3">
+        <div className="flex items-center gap-1">
+          <button
+            onClick={prevYear}
+            className="p-1 rounded-lg hover:bg-foreground/10 transition-colors text-xs font-bold text-muted-foreground hover:text-foreground cursor-pointer"
+            title="Previous Year"
+          >
+            &laquo;
+          </button>
+          <button
+            onClick={prevMonth}
+            className="p-1 rounded-lg hover:bg-foreground/10 transition-colors text-xs font-bold text-muted-foreground hover:text-foreground cursor-pointer"
+            title="Previous Month"
+          >
+            &lt;
+          </button>
+        </div>
+
+        {/* Month & Year Selectors */}
+        <div className="flex items-center gap-1.5">
+          <select
+            value={month}
+            onChange={handleMonthChange}
+            className="bg-secondary text-foreground text-xs font-semibold px-2 py-1 rounded-lg border border-border cursor-pointer outline-none focus:ring-1 focus:ring-primary"
+          >
+            {monthNames.map((name, idx) => (
+              <option key={name} value={idx} className="bg-card text-foreground">
+                {name}
+              </option>
+            ))}
+          </select>
+
+          <select
+            value={year}
+            onChange={handleYearChange}
+            className="bg-secondary text-foreground text-xs font-semibold px-2 py-1 rounded-lg border border-border cursor-pointer outline-none focus:ring-1 focus:ring-primary"
+          >
+            {yearOptions.map((y) => (
+              <option key={y} value={y} className="bg-card text-foreground">
+                {y}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <div className="flex items-center gap-1">
+          <button
+            onClick={nextMonth}
+            className="p-1 rounded-lg hover:bg-foreground/10 transition-colors text-xs font-bold text-muted-foreground hover:text-foreground cursor-pointer"
+            title="Next Month"
+          >
+            &gt;
+          </button>
+          <button
+            onClick={nextYear}
+            className="p-1 rounded-lg hover:bg-foreground/10 transition-colors text-xs font-bold text-muted-foreground hover:text-foreground cursor-pointer"
+            title="Next Year"
+          >
+            &raquo;
+          </button>
+        </div>
       </div>
 
+      {/* Weekday Labels */}
       <div className="grid grid-cols-7 gap-1 text-center text-xs font-semibold text-muted-foreground mb-2">
-        <span>Su</span>
-        <span>Mo</span>
-        <span>Tu</span>
-        <span>We</span>
-        <span>Th</span>
-        <span>Fr</span>
-        <span>Sa</span>
+        <span>Su</span><span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span>
       </div>
 
+      {/* Days Grid */}
       <div className="grid grid-cols-7 gap-1 text-center text-xs">
         {days.map((day, idx) => {
-          if (day === null) {
-            return <div key={`empty-${idx}`} className="py-1" />;
-          }
+          if (day === null) return <div key={`empty-${idx}`} className="h-8 w-8" />;
 
-          const highlight = isToday(day)
-            ? "bg-primary text-primary-foreground font-bold rounded-full"
-            : "hover:bg-foreground/10 rounded-full text-foreground/90";
+          const todayClass = isToday(day)
+            ? "bg-primary text-primary-foreground font-bold rounded-full shadow-xs"
+            : isSelected(day)
+            ? "bg-primary/20 text-primary border border-primary/40 rounded-full font-semibold"
+            : "hover:bg-foreground/10 rounded-full text-foreground/90 font-medium";
 
           return (
             <div
               key={`day-${day}`}
-              className={cn("py-1.5 cursor-pointer transition-colors flex items-center justify-center h-8 w-8 mx-auto", highlight)}
+              onClick={() => setSelectedDate(day)}
+              className={cn("cursor-pointer transition-all flex items-center justify-center h-8 w-8 mx-auto text-xs", todayClass)}
             >
               {day}
             </div>
           );
         })}
+      </div>
+
+      {/* Quick Actions Footer */}
+      <div className="mt-3 pt-2.5 border-t border-foreground/10 flex items-center justify-between text-xs">
+        <span className="text-[11px] font-mono text-muted-foreground font-medium">
+          {monthNames[month]} {year}
+        </span>
+
+        <button
+          onClick={jumpToToday}
+          className="px-2.5 py-1 rounded-lg bg-primary/10 hover:bg-primary/20 text-primary font-semibold text-[11px] transition-colors border border-primary/20 cursor-pointer"
+        >
+          Today
+        </button>
       </div>
     </div>
   );
@@ -135,13 +234,12 @@ export const OsShell = ({ children }) => {
   const navigate = useNavigate();
   const [time, setTime] = useState(() => timeLabel());
   const [isDarkMode, setIsDarkMode] = useState(false);
-  const [brightness, setBrightness] = useState(90);
   const [battery, setBattery] = useState(87);
   const [isSystemMenuOpen, setIsSystemMenuOpen] = useState(false);
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
   const [isMaximized, setIsMaximized] = useState(false);
+  const [activeSection, setActiveSection] = useState("hero");
 
-  // Track running applications/folders persistently
   const [runningApps, setRunningApps] = useState(() => {
     try {
       const stored = localStorage.getItem("running_apps");
@@ -168,13 +266,53 @@ export const OsShell = ({ children }) => {
     document.documentElement.classList.toggle("dark", dark);
   }, []);
 
-  // Sync current active route with runningApps list
   useEffect(() => {
     const path = location.pathname;
     if (path !== "/" && !runningApps.includes(path)) {
       updateRunningApps([...runningApps, path]);
     }
   }, [location.pathname]);
+
+  // Active section scrollspy for Homepage
+  useEffect(() => {
+    if (location.pathname !== "/") return;
+
+    const sections = ["hero", "experience", "projects", "skills", "education", "about", "contact"];
+    const container = document.getElementById("os-home-scroll-container");
+    if (!container) return;
+
+    const handleScroll = () => {
+      const containerTop = container.scrollTop;
+      for (const sectionId of sections) {
+        const el = document.getElementById(sectionId);
+        if (el) {
+          const top = el.offsetTop - 180;
+          const height = el.offsetHeight;
+          if (containerTop >= top && containerTop < top + height) {
+            setActiveSection(sectionId);
+            break;
+          }
+        }
+      }
+    };
+
+    container.addEventListener("scroll", handleScroll);
+    return () => container.removeEventListener("scroll", handleScroll);
+  }, [location.pathname]);
+
+  const handleNavClick = (sectionId) => {
+    setIsSystemMenuOpen(false);
+    if (location.pathname !== "/") {
+      navigate("/");
+      setTimeout(() => {
+        const el = document.getElementById(sectionId);
+        if (el) el.scrollIntoView({ behavior: "smooth" });
+      }, 150);
+    } else {
+      const el = document.getElementById(sectionId);
+      if (el) el.scrollIntoView({ behavior: "smooth" });
+    }
+  };
 
   useEffect(() => {
     let mounted = true;
@@ -217,7 +355,6 @@ export const OsShell = ({ children }) => {
       { to: "/projects", label: "Projects", icon: LayoutGrid },
     ];
 
-    // Find running unpinned paths (About, Skills, Experience, Education, Contact)
     const unpinnedPaths = runningApps.filter(
       (path) => !["/", "/terminal", "/projects"].includes(path)
     );
@@ -247,34 +384,36 @@ export const OsShell = ({ children }) => {
         label: "Mail",
         icon: Mail,
       },
-      { href: "https://github.com/mashu2315", label: "GitHub", icon: Github },
+      { href: profile.links.github, label: "GitHub", icon: Github },
     ];
 
     return [...pinned, ...unpinnedItems, ...external];
   }, [runningApps]);
 
-  const menuItems = useMemo(
+  const menuSections = useMemo(
     () => [
-      { to: "/about", label: "About" },
-      { to: "/skills", label: "Skills" },
-      { to: "/experience", label: "Experience" },
-      { to: "/education", label: "Education" },
-      { to: "/projects", label: "Projects" },
-      { to: "/contact", label: "Contact Me" },
+      { id: "experience", label: "Experience" },
+      { id: "projects", label: "Projects" },
+      { id: "skills", label: "Skills" },
+      { id: "education", label: "Education" },
+      { id: "about", label: "About" },
+      { id: "contact", label: "Contact" },
     ],
     []
   );
 
   const windowTitle = useMemo(() => {
-    const match = menuItems.find((m) => m.to === location.pathname)?.label;
+    const match = menuSections.find((m) => `/${m.id}` === location.pathname)?.label;
     if (location.pathname === "/") return "Home";
     if (location.pathname === "/terminal") return "Terminal";
     return match ?? "Portfolio";
-  }, [location.pathname, menuItems]);
+  }, [location.pathname, menuSections]);
 
   return (
-    <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
-      {/* Click outside overlay to close topbar dropdowns */}
+    <div className="relative min-h-screen bg-background text-foreground overflow-x-hidden">
+      {/* Global Star Background Layer */}
+      <StarBackground />
+
       {(isSystemMenuOpen || isCalendarOpen) && (
         <div
           className="fixed inset-0 z-40 bg-transparent cursor-default"
@@ -285,31 +424,65 @@ export const OsShell = ({ children }) => {
         />
       )}
 
-      {/* top bar */}
-      <div className="fixed top-0 inset-x-0 z-50 h-12 bg-foreground/10 backdrop-blur-md border-b border-foreground/10">
-        <div className="h-full px-4 flex items-center justify-between">
-          <div className="text-sm font-semibold text-foreground/90">
-            {profile.osName ?? "AshutoshOS"}
-          </div>
+      {/* Top OS Header Navigation */}
+      <div className="fixed top-0 inset-x-0 z-50 h-12 bg-background/85 backdrop-blur-md border-b border-foreground/10 px-4 flex items-center justify-between">
+        {/* Terminal Prompt & Sticky Navigation */}
+        <div className="flex items-center gap-4">
+          <button
+            onClick={() => handleNavClick("hero")}
+            className="flex items-center gap-1.5 text-xs font-mono font-bold text-primary hover:opacity-80 transition-opacity cursor-pointer"
+          >
+            <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse inline-block" />
+            <span>ashutosh@portfolio:~$</span>
+          </button>
 
-          <div className="relative">
-            <button
-              className="text-xs text-foreground/70 font-medium hover:text-foreground transition-colors cursor-pointer"
-              onClick={() => {
-                setIsCalendarOpen((v) => !v);
-                setIsSystemMenuOpen(false);
-              }}
-              aria-label="Clock"
-            >
-              {time}
-            </button>
+          {/* Nav Links for Desktop */}
+          <nav className="hidden sm:flex items-center gap-1 text-xs font-mono">
+            {menuSections.map((item) => (
+              <button
+                key={item.id}
+                onClick={() => handleNavClick(item.id)}
+                className={cn(
+                  "px-2.5 py-1 rounded-md transition-all cursor-pointer",
+                  location.pathname === "/" && activeSection === item.id
+                    ? "bg-primary/15 text-primary font-bold border border-primary/25"
+                    : "text-muted-foreground hover:text-foreground hover:bg-foreground/5"
+                )}
+              >
+                {item.label}
+              </button>
+            ))}
+          </nav>
+        </div>
 
-            {isCalendarOpen && (
-              <div className="absolute left-1/2 -translate-x-1/2 top-10 z-50">
-                <CalendarWidget />
-              </div>
-            )}
-          </div>
+        {/* Right side Clock & Theme Toggle */}
+        <div className="flex items-center gap-3">
+          {/* Direct Light/Dark Theme Switcher */}
+          <button
+            onClick={toggleTheme}
+            className="p-1.5 rounded-lg bg-foreground/5 hover:bg-foreground/10 text-foreground transition-colors cursor-pointer"
+            title="Toggle theme"
+            aria-label="Toggle theme"
+          >
+            {isDarkMode ? <Sun size={16} className="text-amber-400" /> : <Moon size={16} className="text-slate-700" />}
+          </button>
+
+          <button
+            className="text-xs text-foreground/80 font-medium hover:text-foreground transition-colors cursor-pointer"
+            onClick={() => {
+              setIsCalendarOpen((v) => !v);
+              setIsSystemMenuOpen(false);
+            }}
+            aria-label="Clock"
+          >
+            {time}
+          </button>
+
+          {isCalendarOpen && (
+            <div className="absolute right-12 top-10 z-50">
+              <CalendarWidget />
+            </div>
+          )}
 
           <div className="relative">
             <button
@@ -317,86 +490,60 @@ export const OsShell = ({ children }) => {
                 setIsSystemMenuOpen((v) => !v);
                 setIsCalendarOpen(false);
               }}
-              className="flex items-center gap-2 text-xs text-foreground/70 px-2 py-1 rounded-lg hover:bg-foreground/10 transition-colors"
+              className="flex items-center gap-2 text-xs text-foreground/80 px-2 py-1 rounded-lg hover:bg-foreground/10 transition-colors"
               aria-label="System menu"
               title="System menu"
             >
               <Battery size={16} />
               <span>{battery}%</span>
-              <Settings size={16} />
             </button>
 
             {isSystemMenuOpen && (
-              <div className="absolute right-0 mt-2 w-72 rounded-xl border border-foreground/15 bg-card/90 backdrop-blur-md shadow-[0_20px_60px_rgba(0,0,0,0.35)] overflow-hidden z-50">
-                <div className="px-4 py-3 border-b border-foreground/10">
-                  <div className="text-sm font-semibold text-foreground/90">
-                    {profile.osName ?? "AshutoshOS"}
+              <div className="absolute right-0 mt-2 w-64 rounded-xl border border-foreground/15 bg-card/95 backdrop-blur-md shadow-xl overflow-hidden z-50">
+                <div className="px-4 py-3 border-b border-foreground/10 flex items-center justify-between">
+                  <div>
+                    <div className="text-xs font-bold text-foreground">
+                      {profile.osName ?? "AshutoshOS"}
+                    </div>
+                    <div className="text-[11px] text-muted-foreground mt-0.5">
+                      {time}
+                    </div>
                   </div>
-                  <div className="text-xs text-muted-foreground mt-1">
-                    {time}
-                  </div>
+                  <button
+                    onClick={toggleTheme}
+                    className="p-2 rounded-lg bg-foreground/5 hover:bg-foreground/10 transition-colors cursor-pointer"
+                    aria-label="Toggle theme"
+                  >
+                    {isDarkMode ? <Sun size={15} className="text-amber-400" /> : <Moon size={15} className="text-slate-700" />}
+                  </button>
                 </div>
 
-                <div className="px-4 py-3 space-y-3">
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm text-foreground/80">Dark mode</span>
-                    <button
-                      onClick={toggleTheme}
-                      className="p-2 rounded-lg bg-foreground/5 hover:bg-foreground/10 transition-colors"
-                      aria-label="Toggle theme"
-                    >
-                      {isDarkMode ? <Sun size={16} /> : <Moon size={16} />}
-                    </button>
-                  </div>
-
-                  <div className="flex items-center gap-2">
-                    <Monitor size={16} className="text-foreground/70" />
-                    <input
-                      aria-label="Brightness"
-                      type="range"
-                      min={60}
-                      max={110}
-                      value={brightness}
-                      onChange={(e) => setBrightness(Number(e.target.value))}
-                      className="w-full accent-[hsl(var(--primary))]"
-                    />
-                  </div>
-
-                  <div className="flex items-center justify-between text-sm">
-                    <span className="text-foreground/80">Battery</span>
-                    <span className="text-foreground/70">{battery}%</span>
-                  </div>
-
-                  <div className="grid grid-cols-2 gap-2 pt-2">
-                    {menuItems.map((m) => (
-                      <Link
-                        key={m.to}
-                        to={m.to}
-                        onClick={() => setIsSystemMenuOpen(false)}
-                        className="text-sm rounded-lg px-3 py-2 bg-foreground/5 hover:bg-foreground/10 transition-colors text-foreground/80 text-center"
+                <div className="p-3 space-y-2">
+                  <div className="grid grid-cols-2 gap-1.5">
+                    {menuSections.map((m) => (
+                      <button
+                        key={m.id}
+                        onClick={() => handleNavClick(m.id)}
+                        className="text-xs rounded-lg px-2.5 py-1.5 bg-foreground/5 hover:bg-foreground/10 transition-colors text-foreground/80 text-center font-medium cursor-pointer"
                       >
                         {m.label}
-                      </Link>
+                      </button>
                     ))}
                   </div>
 
-                  <div className="pt-3 border-t border-foreground/10">
-                    <div className="text-[10px] font-bold text-muted-foreground/80 uppercase tracking-widest px-1 mb-2 flex items-center gap-2">
-                      <div className="w-1.5 h-1.5 rounded-full bg-primary" />
-                      Games
-                    </div>
-                    <div className="grid grid-cols-2 gap-2">
+                  <div className="pt-2 border-t border-foreground/10">
+                    <div className="grid grid-cols-2 gap-1.5">
                       <Link
                         to="/snake"
                         onClick={() => setIsSystemMenuOpen(false)}
-                        className="text-xs flex items-center justify-center gap-2 rounded-lg px-3 py-2 bg-primary/10 hover:bg-primary/20 transition-colors text-primary font-bold border border-primary/10"
+                        className="text-xs flex items-center justify-center gap-1.5 rounded-lg px-2.5 py-1.5 bg-primary/10 hover:bg-primary/20 transition-colors text-primary font-bold border border-primary/15"
                       >
                         <Gamepad2 size={14} /> Snake
                       </Link>
                       <Link
                         to="/paint"
                         onClick={() => setIsSystemMenuOpen(false)}
-                        className="text-xs flex items-center justify-center gap-2 rounded-lg px-3 py-2 bg-primary/10 hover:bg-primary/20 transition-colors text-primary font-bold border border-primary/10"
+                        className="text-xs flex items-center justify-center gap-1.5 rounded-lg px-2.5 py-1.5 bg-primary/10 hover:bg-primary/20 transition-colors text-primary font-bold border border-primary/15"
                       >
                         <Palette size={14} /> Paint
                       </Link>
@@ -409,17 +556,17 @@ export const OsShell = ({ children }) => {
         </div>
       </div>
 
-      {/* dock */}
+      {/* Left Dock */}
       <div className="fixed left-3 top-16 z-50 hidden md:flex flex-col gap-2">
-        <div className="rounded-2xl border border-foreground/15 bg-card/70 backdrop-blur-md p-2 shadow-[0_10px_35px_rgba(0,0,0,0.25)] flex flex-col gap-1">
+        <div className="rounded-2xl border border-foreground/15 bg-card/80 backdrop-blur-md p-2 shadow-lg flex flex-col gap-1">
           {dockItems.map((item) => {
             const Icon = item.icon;
             const isOpen = item.to ? runningApps.includes(item.to) || item.to === "/" : false;
             const isFocused = item.to ? location.pathname === item.to : false;
 
             const base =
-              "w-11 h-11 rounded-xl grid place-items-center transition-all duration-200 hover:scale-105 relative cursor-pointer";
-            const active = "bg-primary/20 text-primary shadow-inner";
+              "w-10 h-10 rounded-xl grid place-items-center transition-all duration-150 relative cursor-pointer";
+            const active = "bg-primary/20 text-primary shadow-xs";
             const running = "bg-foreground/5 text-foreground/90 hover:bg-foreground/10";
             const idle = "bg-foreground/5 text-foreground/80 hover:bg-foreground/10";
 
@@ -446,11 +593,11 @@ export const OsShell = ({ children }) => {
                 >
                   <div
                     className={cn(
-                      "absolute left-0 w-1 rounded-r-full transition-all duration-200 bg-primary",
+                      "absolute left-0 w-1 rounded-r-full transition-all duration-150 bg-primary",
                       isFocused ? "h-5" : isOpen ? "h-2" : "h-0"
                     )}
                   />
-                  <Icon size={20} />
+                  <Icon size={18} />
                 </button>
               );
             }
@@ -460,37 +607,35 @@ export const OsShell = ({ children }) => {
                 key={item.label}
                 href={item.href}
                 target={item.href.startsWith("http") ? "_blank" : undefined}
-                rel={
-                  item.href.startsWith("http") ? "noopener noreferrer" : undefined
-                }
+                rel={item.href.startsWith("http") ? "noopener noreferrer" : undefined}
                 title={item.label}
                 className={cn(base, idle)}
               >
-                <Icon size={20} />
+                <Icon size={18} />
               </a>
             );
           })}
         </div>
       </div>
 
-      {/* "window" */}
-      <div className="pt-16 md:pl-20">
-        <div className={cn("h-full", location.pathname !== "/" && "pb-10")}>
+      {/* Main Content Container */}
+      <div className="pt-12 relative z-10 w-full">
+        <div className={cn("h-full w-full", location.pathname !== "/" && "pb-10")}>
           {location.pathname === "/" ? (
             <div
-              className="h-[calc(100vh-4rem)] w-full relative overflow-hidden"
-              style={{ filter: `brightness(${brightness}%)` }}
+              id="os-home-scroll-container"
+              className="h-[calc(100vh-3rem)] w-full relative overflow-y-auto overflow-x-hidden scroll-smooth"
             >
               {children}
             </div>
           ) : (
             <div
               className={cn(
-                "border border-foreground/15 bg-card/40 backdrop-blur-md shadow-[0_15px_60px_rgba(0,0,0,0.25)] overflow-hidden flex flex-col transition-all duration-300",
-                isMaximized ? "rounded-none h-[calc(100vh-4rem)] w-full" : "rounded-2xl h-[calc(100vh-7rem)] mx-4 md:ml-0 md:mr-6"
+                "border border-foreground/15 bg-card/40 backdrop-blur-xs shadow-xl overflow-hidden flex flex-col transition-all duration-200",
+                isMaximized ? "rounded-none h-[calc(100vh-4rem)] w-full" : "rounded-2xl h-[calc(100vh-7rem)] mx-4 md:ml-0 md:mr-6 mt-4"
               )}
             >
-              <div className="h-11 flex-none border-b border-foreground/10 bg-background/40 flex items-center justify-between px-4 select-none">
+              <div className="h-10 flex-none border-b border-foreground/10 bg-card/40 flex items-center justify-between px-4 select-none">
                 <div className="text-xs text-muted-foreground font-medium">
                   {windowTitle} — {profile.osName ?? "AshutoshOS"}
                 </div>
@@ -498,19 +643,19 @@ export const OsShell = ({ children }) => {
                 <div className="flex items-center gap-1">
                   <button
                     onClick={() => navigate("/")}
-                    className="p-2 rounded-lg hover:bg-foreground/10 transition-colors"
+                    className="p-1.5 rounded-lg hover:bg-foreground/10 transition-colors"
                     aria-label="Minimize"
                     title="Minimize"
                   >
-                    <Minus size={16} />
+                    <Minus size={15} />
                   </button>
                   <button
                     onClick={() => setIsMaximized((v) => !v)}
-                    className="p-2 rounded-lg hover:bg-foreground/10 transition-colors"
+                    className="p-1.5 rounded-lg hover:bg-foreground/10 transition-colors"
                     aria-label="Maximize"
                     title="Maximize"
                   >
-                    {isMaximized ? <Square size={14} /> : <Maximize2 size={16} />}
+                    {isMaximized ? <Square size={13} /> : <Maximize2 size={15} />}
                   </button>
                   <button
                     onClick={() => {
@@ -518,18 +663,15 @@ export const OsShell = ({ children }) => {
                       updateRunningApps(updated);
                       navigate("/");
                     }}
-                    className="p-2 rounded-lg hover:bg-red-500/20 hover:text-red-500 transition-colors"
+                    className="p-1.5 rounded-lg hover:bg-red-500/20 hover:text-red-500 transition-colors"
                     aria-label="Close"
                     title="Close"
                   >
-                    <X size={16} />
+                    <X size={15} />
                   </button>
                 </div>
               </div>
-              <div
-                className="flex-1 overflow-y-auto bg-background/50 w-full"
-                style={{ filter: `brightness(${brightness}%)` }}
-              >
+              <div className="flex-1 overflow-y-auto bg-transparent w-full">
                 {children}
               </div>
             </div>
@@ -539,4 +681,3 @@ export const OsShell = ({ children }) => {
     </div>
   );
 };
-
