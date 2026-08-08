@@ -1,116 +1,171 @@
 import React from "react";
 import Tilt from "react-parallax-tilt";
 import { experiences } from "../lib/portfolioData";
-import { TerminalWidget } from "./TerminalWidget";
+import { Briefcase, Calendar, MapPin, CheckCircle2, FileText } from "lucide-react";
 
 const Experience = () => {
   return (
-    <section
-      id="experience"
-      className="py-16 md:py-20 px-4 md:px-8 lg:px-12 font-sans bg-skills-gradient clip-path-custom-2"
-    >
-      {/* Section Title */}
-      <div className="text-center mb-12">
-        <h2 className="text-4xl font-bold text-primary">EXPERIENCE</h2>
-
-        <p className="text-muted-foreground mt-3 text-base md:text-lg font-semibold max-w-3xl mx-auto">
-          A collection of my work experience and the roles I have taken in
-          various organizations
-        </p>
-      </div>
-
-      {/* Experience Timeline */}
-      <div className="grid grid-cols-1 xl:grid-cols-[1fr_460px] gap-10 items-start">
-        <div className="relative max-w-5xl mx-auto w-full">
-          {/* Vertical line */}
-          <div className="absolute sm:left-1/2 left-0 transform -translate-x-1/2 sm:-translate-x-0 w-1 bg-primary/50 h-full"></div>
-
-          {/* Experience Entries */}
-          {experiences.map((experience, index) => (
-            <div
-              key={experience.id}
-              className={`flex flex-col sm:flex-row items-center mb-16 ${
-                index % 2 === 0 ? "sm:justify-end" : "sm:justify-start"
-              }`}
-            >
-              {/* Timeline Circle */}
-              <div className="absolute sm:left-1/2 left-0 transform -translate-x-1/2 bg-gray-400 border-4 border-[#8245ec] w-12 h-12 sm:w-16 sm:h-16 rounded-full opacity-10 flex justify-center items-center z-10">
-                <img
-                  src={experience.img}
-                  alt={experience.company}
-                  className="w-full h-full object-fill rounded-full"
-                />
-              </div>
-              <Tilt
-                className="transition-all delay-300 rounded-full"
-                tiltMaxAngleX={4}
-                tiltMaxAngleY={8}
-                perspective={500}
-                scale={1.05}
-                transitionSpeed={100}
-                gyroscope={true}
-              >
-                {/* Content Section */}
-                <div
-                  className={`w-full sm:max-w-md p-5 sm:p-7 rounded-2xl border border-foreground/20 bg-primary-background backdrop-blur-md shadow-[0_0_20px_1px_rgba(130,69,236,0.3)] ${
-                    index % 2 === 0 ? "sm:ml-0" : "sm:mr-0"
-                  } sm:ml-44 sm:mr-44 ml-8 transform transition-transform duration-300 `}
-                >
-                  {/* Flex container for image and text */}
-                  <div className="flex items-start gap-4">
-                    {/* Company Logo/Image */}
-                    <div className="w-14 h-14 bg-white rounded-full overflow-hidden shrink-0">
-                      <img
-                        src={experience.img}
-                        alt={experience.company}
-                        className="w-full h-full object-fill"
-                      />
-                    </div>
-
-                    {/* Role, Company Name, and Date */}
-                    <div className="flex flex-col justify-between text-left">
-                      <div>
-                        <h3 className="text-xl sm:text-2xl font-semibold text-secondary-foreground">
-                          {experience.role}
-                        </h3>
-                        <h4 className="text-sm text-foreground/70">
-                          {experience.company}
-                        </h4>
-                      </div>
-                      {/* Date at the bottom */}
-                      <p className="text-xs text-foreground/50 mt-2">
-                        {experience.date}
-                      </p>
-                    </div>
-                  </div>
-
-                  <p className="mt-4 text-muted-foreground text-sm leading-6 text-left">
-                    {experience.desc}
-                  </p>
-                  <div className="mt-4 text-left">
-                    <h5 className="font-medium text-foreground/80">Skills:</h5>
-                    <ul className="flex flex-wrap mt-2">
-                      {experience.skills.map((skill, index) => (
-                        <li
-                          key={index}
-                          className="bg-[#8245ec] text-gray-200 px-3 py-1 text-xs rounded-lg mr-2 mb-2 border border-white/10"
-                        >
-                          {skill}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-              </Tilt>
-            </div>
-          ))}
+    <section id="experience" className="py-16 md:py-24 px-4 font-sans relative overflow-hidden">
+      <div className="container max-w-6xl mx-auto">
+        {/* Section Header */}
+        <div className="text-center mb-16">
+          <span className="text-xs font-mono font-semibold text-primary uppercase tracking-widest">
+            CAREER BRANCH
+          </span>
+          <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight uppercase text-foreground mt-1">
+            Work <span className="text-primary">Experience</span>
+          </h2>
+          <p className="text-muted-foreground mt-2 text-sm md:text-base font-medium max-w-xl mx-auto">
+            Interactive career branch showing professional full-stack and backend engineering history.
+          </p>
         </div>
 
-        <aside className="xl:sticky xl:top-24">
-          <TerminalWidget />
-        </aside>
+        {/* Alternating Branch Timeline Container */}
+        <div className="relative">
+          {/* Central Vertical Trunk (The Branch) */}
+          <div className="hidden md:block absolute left-1/2 top-4 bottom-4 w-1 bg-gradient-to-b from-primary/80 via-primary/50 to-primary/20 -translate-x-1/2 rounded-full z-0" />
+
+          <div className="space-y-12 md:space-y-16 relative z-10">
+            {experiences.map((experience, idx) => {
+              const isEven = idx % 2 === 0;
+
+              return (
+                <div
+                  key={experience.id}
+                  className="relative grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 items-center"
+                >
+                  {/* Central Node (Fruit/Leaf on the Branch) */}
+                  <div className="hidden md:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-20 w-9 h-9 rounded-full bg-card border-2 border-primary text-primary items-center justify-center shadow-md">
+                    <Briefcase size={15} />
+                  </div>
+
+                  {/* Horizontal Stem Line Connecting Node to Card */}
+                  <div
+                    className={`hidden md:block absolute top-1/2 -translate-y-1/2 h-0.5 bg-primary/40 z-10 ${
+                      isEven ? "left-1/2 w-8" : "right-1/2 w-8"
+                    }`}
+                  />
+
+                  {/* Left Column */}
+                  {!isEven ? (
+                    <div className="w-full">
+                      <ExperienceCard experience={experience} />
+                    </div>
+                  ) : (
+                    <div className="hidden md:block" />
+                  )}
+
+                  {/* Right Column */}
+                  {isEven ? (
+                    <div className="w-full">
+                      <ExperienceCard experience={experience} />
+                    </div>
+                  ) : (
+                    <div className="hidden md:block" />
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </div>
       </div>
     </section>
+  );
+};
+
+const ExperienceCard = ({ experience }) => {
+  return (
+    <Tilt
+      tiltMaxAngleX={6}
+      tiltMaxAngleY={6}
+      perspective={800}
+      scale={1.01}
+      transitionSpeed={300}
+      gyroscope={true}
+      className="w-full"
+    >
+      <div className="group p-6 rounded-2xl border border-border bg-card shadow-xs transition-all duration-300 hover:border-primary/50 hover:shadow-md cursor-pointer">
+        {/* Card Header */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-border pb-4">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-primary/10 border border-primary/20 p-1 flex items-center justify-center shrink-0">
+              <img
+                src={experience.img}
+                alt={experience.company}
+                className="w-full h-full object-cover rounded-lg bg-white group-hover:rotate-6 group-hover:scale-110 transition-transform duration-300 ease-out"
+                onError={(e) => {
+                  e.target.style.display = "none";
+                }}
+              />
+            </div>
+            <div>
+              <h3 className="text-base sm:text-lg font-bold text-foreground group-hover:text-primary transition-colors">
+                {experience.role}
+              </h3>
+              <div className="flex flex-wrap items-center gap-2 text-xs font-semibold text-primary">
+                <span className="text-foreground/90 font-bold">{experience.company}</span>
+                {experience.location && (
+                  <span className="flex items-center gap-1 text-muted-foreground bg-secondary px-2 py-0.5 rounded border border-border">
+                    <MapPin size={11} /> {experience.location}
+                  </span>
+                )}
+              </div>
+            </div>
+          </div>
+
+          <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-primary/10 text-primary border border-primary/20 whitespace-nowrap flex items-center gap-1.5 self-start sm:self-center">
+            <Calendar size={12} /> {experience.date}
+          </span>
+        </div>
+
+        {/* 3 Bullet Points */}
+        <div className="mt-4 space-y-2.5">
+          {experience.points ? (
+            experience.points.map((pt, idx) => (
+              <div key={idx} className="flex items-start gap-2.5">
+                <CheckCircle2 className="w-4 h-4 text-primary shrink-0 mt-0.5" />
+                <p className="text-muted-foreground text-xs sm:text-sm leading-relaxed font-medium">
+                  {pt}
+                </p>
+              </div>
+            ))
+          ) : (
+            <p className="text-muted-foreground text-xs sm:text-sm leading-relaxed font-medium">
+              {experience.desc}
+            </p>
+          )}
+        </div>
+
+        {/* Tech Badges & Certificate */}
+        <div className="mt-5 border-t border-border pt-4 flex flex-wrap items-center justify-between gap-4">
+          <div className="flex flex-wrap items-center gap-1.5">
+            <span className="text-[11px] font-bold text-muted-foreground uppercase tracking-wider mr-1">
+              Stack:
+            </span>
+            {experience.skills.map((skill, sIdx) => (
+              <span
+                key={sIdx}
+                className="bg-secondary text-secondary-foreground font-semibold px-2.5 py-0.5 text-xs rounded border border-border"
+              >
+                {skill}
+              </span>
+            ))}
+          </div>
+
+          {experience.certificate && (
+            <a
+              href={experience.certificate}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-xs font-semibold px-3 py-1.5 rounded-lg bg-primary/10 text-primary border border-primary/20 hover:bg-primary/20 transition-colors flex items-center gap-1.5 whitespace-nowrap"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <FileText size={14} /> Certificate
+            </a>
+          )}
+        </div>
+      </div>
+    </Tilt>
   );
 };
 
