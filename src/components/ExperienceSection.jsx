@@ -74,6 +74,10 @@ const Experience = () => {
 };
 
 const ExperienceCard = ({ experience }) => {
+  const roles = experience.roles || [];
+  const hasMultipleRoles = roles.length > 1;
+  const primaryRole = experience.role || (roles.length > 0 ? roles[0].role : "");
+
   return (
     <Tilt
       tiltMaxAngleX={6}
@@ -86,9 +90,9 @@ const ExperienceCard = ({ experience }) => {
     >
       <div className="group p-6 rounded-2xl border border-border bg-card shadow-xs transition-all duration-300 hover:border-primary/50 hover:shadow-md cursor-pointer">
         {/* Card Header */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-border pb-4">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-primary/10 border border-primary/20 p-1 flex items-center justify-center shrink-0">
+        <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3 border-b border-border pb-4">
+          <div className="flex items-start gap-3">
+            <div className="w-11 h-11 rounded-xl bg-primary/10 border border-primary/20 p-1 flex items-center justify-center shrink-0 mt-0.5">
               <img
                 src={experience.img}
                 alt={experience.company}
@@ -100,16 +104,42 @@ const ExperienceCard = ({ experience }) => {
             </div>
             <div>
               <h3 className="text-base sm:text-lg font-bold text-foreground group-hover:text-primary transition-colors">
-                {experience.role}
+                {experience.company}
               </h3>
-              <div className="flex flex-wrap items-center gap-2 text-xs font-semibold text-primary">
-                <span className="text-foreground/90 font-bold">{experience.company}</span>
-                {experience.location && (
-                  <span className="flex items-center gap-1 text-muted-foreground bg-secondary px-2 py-0.5 rounded border border-border">
-                    <MapPin size={11} /> {experience.location}
-                  </span>
-                )}
-              </div>
+              
+              {!hasMultipleRoles && primaryRole && (
+                <p className="text-xs sm:text-sm font-semibold text-primary mt-0.5">
+                  {primaryRole}
+                </p>
+              )}
+
+              {experience.location && (
+                <p className="flex items-center gap-1 text-xs text-muted-foreground font-medium mt-0.5">
+                  <MapPin size={11} /> {experience.location}
+                </p>
+              )}
+
+              {/* LinkedIn Nested Roles Timeline (Only shown when company has multiple roles) */}
+              {hasMultipleRoles && (
+                <div className="mt-3.5 relative pl-6 space-y-3.5">
+                  {/* Vertical connecting line - Centered at 7px */}
+                  <div className="absolute left-[7px] top-2.5 bottom-2.5 w-[2px] -translate-x-1/2 bg-muted-foreground/30 group-hover:bg-primary/40 transition-colors" />
+
+                  {roles.map((subRole, rIdx) => (
+                    <div key={rIdx} className="relative pl-2">
+                      {/* Circular dot matching LinkedIn style - Centered at 7px */}
+                      <div className="absolute left-[-17px] top-1.5 w-2.5 h-2.5 -translate-x-1/2 rounded-full bg-muted-foreground/60 group-hover:bg-primary transition-colors border border-card" />
+                      
+                      <h4 className="text-sm font-bold text-primary transition-colors leading-snug">
+                        {subRole.role}
+                      </h4>
+                      <p className="text-xs text-muted-foreground font-medium flex items-center gap-1.5 mt-0.5">
+                        <Calendar size={11} /> {subRole.date}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
 
@@ -118,7 +148,7 @@ const ExperienceCard = ({ experience }) => {
           </span>
         </div>
 
-        {/* 3 Bullet Points */}
+        {/* Card Content (Bullet Points) */}
         <div className="mt-4 space-y-2.5">
           {experience.points ? (
             experience.points.map((pt, idx) => (

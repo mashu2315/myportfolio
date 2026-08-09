@@ -17,10 +17,10 @@ export const AboutSection = () => {
   const achievements = [
     {
       platform: "LeetCode",
-      title: "Knight Rank (Peak Rating: 1890)",
-      description: "Achieved Knight rank on LeetCode with a peak rating of 1890 by solving daily coding challenges.",
+      title: "Knight Rank (Peak Rating: 1896)",
+      description: "Achieved Knight rank on LeetCode with a peak rating of 1896 by solving daily coding challenges.",
       link: profile.codingProfiles.leetcode,
-      badge: "Knight (1890)",
+      badge: "Knight (1896)",
     },
     {
       platform: "CodeChef",
@@ -134,7 +134,7 @@ export const AboutSection = () => {
                   <div className="text-left">
                     <h4 className="font-bold text-sm text-foreground group-hover:text-primary transition-colors">Algorithmic Problem Solving</h4>
                     <p className="text-xs text-muted-foreground mt-0.5 font-medium leading-relaxed">
-                      LeetCode Knight (1890 Peak) with 950+ DSA problems solved across competitive platforms.
+                      LeetCode Knight (1896 Peak) with 1000+ DSA problems solved across competitive platforms.
                     </p>
                   </div>
                 </div>

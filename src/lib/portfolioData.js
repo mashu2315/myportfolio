@@ -93,6 +93,12 @@ export const experiences = [
     company: "City Future Lab - IIT Kharagpur",
     location: "Kharagpur, India (Onsite)",
     date: "May 2026 – Present",
+    roles: [
+      {
+        role: "Full Stack Developer",
+        date: "May 2026 – Present",
+      },
+    ],
     points: [
       "Architected a scalable transport system using MERN, FastAPI, SQL, and WebSockets, unifying frequency-based scheduling with Deadheading & VRP-driven route optimization (26% fleet reduction, 20% efficiency gain).",
       "Engineered event-driven backend services using REST APIs, integrated MongoDB and SQL databases, and containerized deployment via Docker, improving database query performance by 40%.",
@@ -100,28 +106,23 @@ export const experiences = [
     ],
     skills: ["MERN Stack", "FastAPI", "SQL", "WebSockets", "Docker", "MongoDB", "VRP Optimization"],
   },
-  {
+    {
     id: 2,
-    img: optigrit,
-    role: "Full Stack Software Developer Intern (Part-Time)",
-    company: "Optigrit",
-    location: "Remote",
-    date: "Mar 2025 – June 2025",
-    points: [
-      "Engineered backend services and handled socket-based events using Koa.js and PostgreSQL to ensure reliable real-time communication.",
-      "Fixed and optimized the chat feature by resolving critical socket event listener bugs and improving the notification-based forum.",
-      "Resolved complex issues related to task, subtask, course, and section creation, significantly improving the discussion and announcement forums."
-    ],
-    skills: ["WebSockets", "Koa.js", "PostgreSQL", "Backend Architecture", "Real-time Chat"],
-    certificate: optigritCert,
-  },
-  {
-    id: 1,
     img: orkeneo,
-    role: "Full Stack Developer Intern",
-    company: "Orkeneo",
+    role: "Software Developer",
+    company: "Orkeneo AI Labs",
     location: "Remote",
-    date: "Jan 2026 – May 2026",
+    date: "Jan 2026 – Present",
+    roles: [
+      {
+        role: "Software Developer",
+        date: "July 2026 – Present",
+      },
+      {
+        role: "Full Stack Developer Intern",
+        date: "Jan 2026 – July 2026",
+      },
+    ],
     points: [
       "Engineered scalable full-stack data systems using Next.js, TypeScript, REST APIs, and AWS S3, applying ingestion pipelines, real-time dashboards, POS integrations, and LangChain querying to reduce processing time by 40%.",
       "Owned production-grade features including secure auth, Razorpay payments, HubSpot CRM automation, Authkey WhatsApp API, and subscription pipelines with scheduled cron jobs (99.9% uptime).",
@@ -131,12 +132,39 @@ export const experiences = [
     certificate: orkeneoCert,
   },
   {
+    id: 1,
+    img: optigrit,
+    role: "Full Stack Software Developer Intern (Part-Time)",
+    company: "Optigrit",
+    location: "Remote",
+    date: "Mar 2025 – June 2025",
+    roles: [
+      {
+        role: "Full Stack Software Developer Intern (Part-Time)",
+        date: "Mar 2025 – June 2025",
+      },
+    ],
+    points: [
+      "Engineered backend services and handled socket-based events using Koa.js and PostgreSQL to ensure reliable real-time communication.",
+      "Fixed and optimized the chat feature by resolving critical socket event listener bugs and improving the notification-based forum.",
+      "Resolved complex issues related to task, subtask, course, and section creation, significantly improving the discussion and announcement forums."
+    ],
+    skills: ["WebSockets", "Koa.js", "PostgreSQL", "Backend Architecture", "Real-time Chat"],
+    certificate: optigritCert,
+  },
+  {
     id: 0,
     img: dws,
-    role: "Software Development Engineer",
+    role: "Software Development Engineer Intern",
     company: "DWS Global Tech",
     location: "Remote",
     date: "Aug 2025 – Jan 2026",
+    roles: [
+      {
+        role: "Software Development Engineer Intern",
+        date: "Aug 2025 – Jan 2026",
+      },
+    ],
     points: [
       "Developed dynamic and scalable production web applications using the MERN stack, managing both frontend user interfaces and backend microservices.",
       "Collaborated with cross-functional engineering teams in agile sprints to optimize API endpoints, database queries, and mobile responsiveness.",
@@ -144,7 +172,6 @@ export const experiences = [
     ],
     skills: ["MERN Stack", "TypeScript", "Tailwind CSS", "Express.js", "REST APIs"],
   },
-  
 ];
 
 export const portfolioProjects = projects;
